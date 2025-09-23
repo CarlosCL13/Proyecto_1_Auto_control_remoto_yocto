@@ -33,6 +33,6 @@ El sistema está basado en una **Raspberry Pi 4** con una imagen mínima de Linu
 
 1. **Clonar el repositorio**  
    ```bash
-   git clone https://github.com/<usuario>/Proyecto_1_Auto_control_remoto_yocto
+   git clone https://github.com/<usuario>/Proyecto_1_Auto_control_remoto_yocto.git
    cd Proyecto_1_Auto_control_remoto_yocto
 
