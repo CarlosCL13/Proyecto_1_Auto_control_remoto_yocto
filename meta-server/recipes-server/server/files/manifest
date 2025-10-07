@@ -1,0 +1,12 @@
+# Archivos para la receta server
+
+server
+liblibgpio_rpi4.so
+server.service
+auth.js
+control.html
+control.js
+index.html
+styles.css
+users.json
+vehicleApi.js
