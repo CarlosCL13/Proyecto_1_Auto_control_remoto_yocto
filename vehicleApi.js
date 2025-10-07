@@ -42,8 +42,6 @@ class VehicleAPI {
     return response.json();
   }
 
-  // De momento no usado, se debe de definir que valores pueden venir del backend de estado del vehículo
-  // Pueden venir datos en una lista o un objeto con varios parámetros
   async getStatus() {
     const response = await fetch('/api/vehicle/status');
     if (!response.ok) {
@@ -52,14 +50,6 @@ class VehicleAPI {
     return response.json();
   }
 
-  // De momento no usado, se debe de definir como viene el stream de video desde la cámara del vehículo
-  async getVideoStream() {
-    const response = await fetch('/api/vehicle/video');
-    if (!response.ok) {
-      throw new Error('Error al obtener el stream de video');
-    }
-    return response.json();
-  }
 }
 
 export default VehicleAPI;

@@ -63,7 +63,7 @@ class VehicleController {
     // Estado inicial de los datos relacionados a los controles
     this.currentDirection = "stop"
     this.currentGear = "N"
-    this.gearSpeeds = { 1: 33, 2: 66, 3: 100 }
+    this.gearSpeeds = { 1: 1, 2: 2, 3: 3 }
     this.lightStates = { headlights: false, hazard: false, leftSignal: false, rightSignal: false }
 
     // Inicializa la app
@@ -159,12 +159,6 @@ class VehicleController {
 
       // Si el backend devuelve datos, actualiza la UI
       if (status) {
-        if (status.batteryLevel !== undefined) {
-          document.getElementById("batteryLevel").textContent = `${status.batteryLevel}%`;
-        }
-        if (status.signalStrength !== undefined) {
-          document.getElementById("signalStrength").textContent = status.signalStrength;
-        }
         if (status.currentSpeed !== undefined) {
           document.getElementById("currentSpeed").textContent = `${status.currentSpeed} km/h`;
         }
@@ -175,15 +169,6 @@ class VehicleController {
     } catch (error) {
       console.error("Error al actualizar el estado desde el backend:", error);
     }
-    // (Opcional) Actualizar el stream de video si la API lo requiere
-    // try {
-    //   const video = await this.api.getVideoStream();
-    //   if (video && video.url) {
-    //     document.getElementById("videoStream").src = video.url;
-    //   }
-    // } catch (error) {
-    //   console.error("Error al obtener el stream de video:", error);
-    // }
   }
 
 
@@ -225,7 +210,9 @@ class VehicleController {
       })
 
       this.api.setSpeed(0)
-      this.updateMovementStatus(this.currentDirection)
+      // Cuando está en N, forzar movimiento a "Stopped" y velocidad a 0
+      document.getElementById("movementStatus").textContent = "Stopped"
+      document.getElementById("currentSpeed").textContent = "0 km/h"
       console.log("Velocidad enviada al backend: 0");
       return
     }
@@ -262,7 +249,10 @@ class VehicleController {
   // Cambia la dirección del vehículo y actualiza la UI
   setDirection(direction) {
     this.currentDirection = direction
-    this.updateMovementStatus(direction)
+    // Solo actualizar movimiento si la marcha no es N
+    if (this.currentGear !== "N") {
+      this.updateMovementStatus(direction)
+    }
 
     document.querySelectorAll(".dir-btn").forEach((btn) => {
       btn.classList.remove("active")
@@ -283,10 +273,15 @@ class VehicleController {
     let statusText = "Stopped"
     let speed = 0
 
-    if (direction !== "stop") {
+    if (direction !== "stop" && this.currentGear !== "N") {
       statusText = direction.charAt(0).toUpperCase() + direction.slice(1)
       // Velocidad según la marcha
-      speed = Math.round((this.gearSpeeds[this.currentGear] / 100) * 25) // Convertir a km/h
+      let gearSpeed = this.gearSpeeds[this.currentGear]
+      if (typeof gearSpeed !== "number" || isNaN(gearSpeed)) {
+        gearSpeed = 0
+      }
+      speed = Math.round((gearSpeed / 100) * 25) // Convertir a km/h
+      if (isNaN(speed)) speed = 0
     }
 
     statusElement.textContent = statusText

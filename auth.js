@@ -103,5 +103,5 @@ class AuthSystem {
   }
 }
 
-// Initialize authentication system
+// Inicializa la autenticación
 const auth = new AuthSystem()

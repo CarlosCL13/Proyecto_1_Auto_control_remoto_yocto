@@ -212,12 +212,18 @@ body {
   grid-row: 1;
 }
 
+
 .video-container {
   position: relative;
   background: #000;
   border-radius: 12px;
   overflow: hidden;
-  height: 400px;
+  width: 640px;
+  height: 480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-container video {

@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin",
+    "password_hash": "b5692500175fad6bb2b306aa20ff58423c79b130ef310fb3caa924e0f28bc61d"
+  },
+  {
+    "username": "operator",
+    "password_hash": "43f0c6c6138567577006db464815188b04a4bf17bb0e6d5d9bb44a1f6582f050"
+  },
+  {
+    "username": "testuser",
+    "password_hash": "8d969eef6ecad3c29a3a629280e686cff8fab2d6f7f3c1c7a5a3e6a7a3a5a3a5"
+  }
+]
