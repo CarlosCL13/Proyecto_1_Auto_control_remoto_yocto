@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <signal.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +10,12 @@
 #include "auth_utils.h"
 
 #define PORT 8888
+
+volatile sig_atomic_t keep_running = 1;
+
+void handle_signal(int sig) {
+    keep_running = 0;
+}
 
 // Extrae el valor de una clave string de un JSON plano (no anidado)
 // Ejemplo: extract_json_string(data, "direction", direction, sizeof(direction));
@@ -112,7 +119,7 @@ static enum MHD_Result answer_to_connection(void *cls, struct MHD_Connection *co
                     state = 1;
                 }
             }
-            car_toggle_light(type, state);
+            car_toggle_light(type, state, LIGHT_MANUAL);
             const char* resp = "{\"result\":\"ok\"}";
             int ret = send_json_response(connection, resp, MHD_HTTP_OK);
             free(post_data->data); free(post_data);
@@ -208,6 +215,10 @@ int main()
         return 1;
     }
 
+    // Manejo de señales para terminar limpiamente
+    signal(SIGINT, handle_signal);
+    signal(SIGTERM, handle_signal);
+
     struct MHD_Daemon *daemon;
     daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
                               &answer_to_connection, NULL, MHD_OPTION_END);
@@ -217,10 +228,13 @@ int main()
         return 1;
     }
     printf("Servidor web corriendo en http://localhost:%d\n", PORT);
-    getchar();
-    MHD_stop_daemon(daemon);
 
-    // Libera recursos GPIO antes de salir
+    // Bucle principal: espera hasta recibir señal de parada
+    while (keep_running) {
+        sleep(1);
+    }
+
+    MHD_stop_daemon(daemon);
     gpioCleanup();
     return 0;
 }
