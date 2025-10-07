@@ -1,0 +1,11 @@
+[Unit]
+Description=Motion Daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/motion -c /etc/motion.conf
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
