@@ -1,0 +1,4 @@
+dtoverlay=ov5647
+dtoverlay=bcm2835-v4l2
+start_x=1
+gpu_mem=128
