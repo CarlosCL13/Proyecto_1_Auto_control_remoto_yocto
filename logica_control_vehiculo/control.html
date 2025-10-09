@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Control Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <h1>Vehicle Control Dashboard</h1>
+            <div class="header-controls">
+                <span id="connectionStatus" class="status-indicator">Connected</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <section class="video-section">
+                <div class="video-container">
+                   <img src="http://10.119.5.76:8081" width="640" height="480" style="display:block; transform: scaleY(-1) scaleX(-1);">
+                    <div class="video-overlay">
+                        <div class="video-status">Live Feed</div>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <h4>Movement Status</h4>
+                        <div class="status-value" id="movementStatus">Stopped</div>
+                    </div>
+                    <div class="status-card">
+                        <h4>Current Speed</h4>
+                        <div class="status-value" id="currentSpeed">0 km/h</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="control-panel">
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <h3>Direction Control</h3>
+                        <div class="direction-pad">
+                            <button class="dir-btn" id="forwardBtn" data-direction="forward">↑</button>
+                            <div class="dir-row">
+                                <button class="dir-btn" id="leftBtn" data-direction="left">←</button>
+                                <button class="dir-btn stop-btn" id="stopBtn" data-direction="stop">🖐️</button>
+                                <button class="dir-btn" id="rightBtn" data-direction="right">→</button>
+                            </div>
+                            <button class="dir-btn" id="backwardBtn" data-direction="backward">↓</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3>Gear Control</h3>
+                        <div class="gear-control">
+                            <div class="gear-buttons">
+                                <button class="gear-btn" data-gear="N">N</button>
+                                <button class="gear-btn" data-gear="1">1</button>
+                                <button class="gear-btn" data-gear="2">2</button>
+                                <button class="gear-btn" data-gear="3">3</button>
+                            </div>
+                            <div class="gear-display">
+                                <span>Current Gear: </span>
+                                <span id="gearValue">N</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3>Light Control</h3>
+                        <div class="light-controls">
+                            <button class="light-btn" id="headlightsBtn" data-light="headlights">
+                                Headlights
+                            </button>
+                            <button class="light-btn" id="hazardBtn" data-light="hazard">
+                                Taillights
+                            </button>
+                            <button class="light-btn" id="leftSignalBtn" data-light="left-signal">
+                                Left lights
+                            </button>
+                            <button class="light-btn" id="rightSignalBtn" data-light="right-signal">
+                                Right lights
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="control.js" type="module"></script>
+</body>
+
+</html>

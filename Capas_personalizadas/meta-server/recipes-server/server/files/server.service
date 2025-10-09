@@ -1,0 +1,10 @@
+[Unit]
+Description=Servidor personalizado
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/server
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
